@@ -4,12 +4,16 @@ export default class StringSchema {
   }
 
   isValid(value) {
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // every не вополняется далее, если не выполнено условие для текущего элемента:
+    // в таком случае сразу возвращает false (как оператор &&)
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     return this.validators.every((validator) => validator(value) === true);
   }
 
   startsFromUpperCase() {
     const validator = (value) => {
-      if (typeof value !== 'string' || !value.length) return false;
+      if (!value.length) return false;
       const firstLetter = value[0];
       return firstLetter.toUpperCase() === firstLetter && firstLetter.toLowerCase() !== firstLetter;
     };
@@ -17,18 +21,12 @@ export default class StringSchema {
   }
 
   length(strLength) {
-    const validator = (value) => {
-      if (typeof value !== 'string' || value.length !== strLength) return false;
-      return true;
-    };
+    const validator = (value) => value.length === strLength;
     return new StringSchema([...this.validators, validator]);
   }
 
   hasExclamation() {
-    const validator = (value) => {
-      if (typeof value !== 'string') return false;
-      return value.split('!').length > 1;
-    };
+    const validator = (value) => value.split('!').length > 1;
     return new StringSchema([...this.validators, validator]);
   }
 }
