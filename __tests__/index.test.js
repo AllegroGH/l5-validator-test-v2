@@ -55,7 +55,10 @@ test('task3', () => {
   assert.equal(schema.isValid([]), true);
   assert.equal(schema.isValid([1, 23, 4]), true);
   assert.equal(schema.isValid({}), false);
-  assert.equal(schema.isValid(() => { }), false);
+  assert.equal(
+    schema.isValid(() => {}),
+    false,
+  );
 });
 
 test('task4', () => {
@@ -70,6 +73,7 @@ test('task4', () => {
   assert.equal(schema1.isValid([0, 0, 0, 0, [1], [1, [2]]]), false);
 
   assert.equal(schema2.isValid([1, 2, 3, [0, [1, [2, [3, [4]]]]]]), true);
+  // prettier-ignore
   assert.equal(schema2
     .isValid([1, [2], [1, [2, [3, [4, [5, [6, [7, [8, [9, [10, [11]]]]]]]]]]]]), false);
 
